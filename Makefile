@@ -55,7 +55,6 @@ INCDIRS += -I$(ROOTPATH)/Problems/StieBrockett/
 INCDIRS += -I$(ROOTPATH)/Problems/StieSoftICA/
 INCDIRS += -I$(ROOTPATH)/Problems/StieSparseBrockett/
 INCDIRS += -I$(ROOTPATH)/Problems/StieSumBrockett/
-INCDIRS += -I$(ROOTPATH)/Problems/StieSync/
 INCDIRS += -I$(ROOTPATH)/Problems/WeightedLowrank/
 INCDIRS += -I$(ROOTPATH)/Solvers/
 INCDIRS += -I$(ROOTPATH)/cwrapper/
@@ -99,8 +98,7 @@ CPPS += $(ROOTPATH)/Problems/SphereConvexHull/SphereConvexHull.cpp
 CPPS += $(ROOTPATH)/Problems/StieBrockett/StieBrockett.cpp 
 CPPS += $(ROOTPATH)/Problems/StieSoftICA/StieSoftICA.cpp 
 CPPS += $(ROOTPATH)/Problems/StieSparseBrockett/StieSparseBrockett.cpp 
-CPPS += $(ROOTPATH)/Problems/StieSumBrockett/StieSumBrockett.cpp
-CPPS += $(ROOTPATH)/Problems/StieSync/StieSync.cpp
+CPPS += $(ROOTPATH)/Problems/StieSumBrockett/StieSumBrockett.cpp 
 CPPS += $(ROOTPATH)/Problems/WeightedLowrank/WeightedLowRank.cpp 
 CPPS += $(ROOTPATH)/Solvers/LRBFGS.cpp $(ROOTPATH)/Solvers/LRBFGSLPSub.cpp $(ROOTPATH)/Solvers/LRTRSR1.cpp $(ROOTPATH)/Solvers/MRankAdaptive.cpp $(ROOTPATH)/Solvers/QuasiNewton.cpp $(ROOTPATH)/Solvers/RBFGS.cpp $(ROOTPATH)/Solvers/RBFGSLPSub.cpp $(ROOTPATH)/Solvers/RBroydenFamily.cpp $(ROOTPATH)/Solvers/RCG.cpp $(ROOTPATH)/Solvers/RGS.cpp $(ROOTPATH)/Solvers/RNewton.cpp $(ROOTPATH)/Solvers/RSD.cpp $(ROOTPATH)/Solvers/RTRNewton.cpp $(ROOTPATH)/Solvers/RTRSD.cpp $(ROOTPATH)/Solvers/RTRSR1.cpp $(ROOTPATH)/Solvers/RWRBFGS.cpp $(ROOTPATH)/Solvers/Solvers.cpp $(ROOTPATH)/Solvers/SolversLS.cpp $(ROOTPATH)/Solvers/SolversLSLPSub.cpp $(ROOTPATH)/Solvers/SolversTR.cpp 
 
