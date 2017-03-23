@@ -18,7 +18,7 @@ If all the test files are included in a project, then only uncomment one of them
 //#define TESTEUCQUADRATIC
 //#define TESTPRODUCT
 //#define TESTSPHERERAYQUO
-#define TESTSTIEBROCKETT
+//#define TESTSTIEBROCKETT
 //#define TESTSTIESPARSEBROCKETT
 //#define TESTGRASSRQ
 //#define TESTCSO
@@ -37,6 +37,7 @@ If all the test files are included in a project, then only uncomment one of them
 //#define TESTKARCHERMEAN
 //#define TESTLRMATRIXCOMPLETION
 
+#define TESTSTIESYNC
 //#define TESTSIMPLEEXAMPLE
 //#define TESTPRODUCTEXAMPLE
 
