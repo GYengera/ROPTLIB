@@ -1,11 +1,16 @@
-# ROPTLIB
-ROPTLIB: Riemannian Manifold Optimization Library
+# ROPTLIB with SE-Sync Optimization Example
 
+The main function for the SE-Sync optimization problem is in /test/TestStieSync.cpp
+The computation of the function, gradient and hessian can be found in /Problems/StieSync/ folder.
 
-The library is used to solve an optimization problem
+The above mentioned code is self-explanatory as all necessary comments are included.
 
-f(x), x \in \mathcal{M},
+To compile this example use the command: $ make ROPTLIB TP=TestStieSync
 
-where \mathcal{M} is a Riemannian manifold.
+After compilation, the command to run the example is the following:
+$ ./TestStieSync <Q Dataset Path> <n> <d> <p> <Initial value X0 path>
 
-The detalied instruction and user manual can be found at http://www.math.fsu.edu/~whuang2/Indices/index_ROPTLIB.html.
+If the path is not provided to the data for initializing the value of X, then a random point is created on the stacked stiefel manifold.
+
+The optimum value of X is stored in a text file. The path to the file can be altered within the code.
+Gradient and hessian checks are displayed in the terminal for verification.
