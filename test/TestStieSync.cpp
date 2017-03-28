@@ -172,13 +172,14 @@ void testStieSync(char* qpath, int inn, int ind, int inp, char* x0path)
 	//Store xopt into a file
 	const double *optimizer = xopt->ObtainReadData();
 	std::ofstream outfile;
+	//Destination to store xopt can be modified
 	outfile.open("/home/gaurav/xopt.txt");
 	if(!outfile) {
     		std::cout << "Cannot open file to save xopt";
 	}
 	for(row = 0; row < p; ++row){
 		for(col = 0; col < ND; ++col){
-			outfile << row << " " << col << " " << optimizer[row + col * p];	
+			outfile << (row+1) << " " << (col+1) << " " << optimizer[row + col * p];	
 			outfile << std::endl;
 	}
 	}
