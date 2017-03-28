@@ -11,6 +11,10 @@ This is the test file for the SE-Sync problem defined in StieSync.cpp and StieSy
 #include "Others/randgen.h"
 /*Computational time*/
 #include <ctime>
+/*Eigen library, however not used*/
+#include <Eigen/Sparse>
+/*Read and Write to Files*/
+#include <fstream>
 
 /*Problem related classes*/
 #include "Problems/Problem.h"
@@ -32,52 +36,113 @@ This is the test file for the SE-Sync problem defined in StieSync.cpp and StieSy
 
 using namespace ROPTLIB;
 
-/*If the file TESTSTIESYNC is defined in def.h file, then the following
-main() function will be called. */
-#if defined(TESTSTIESYNC)
+void testStieSync(char* qpath, int inn, int ind, int inp, char* x0path = NULL);
 
-void testStieSync();
-
-int main(void)
+int main(int argc, char* argv[])
 {
-	testStieSync();
-
+	if (argc == 5)
+	{
+		testStieSync(argv[1], atoi(argv[2]), atoi(argv[3]), atoi(argv[4]));
+	}
+	else if (argc == 6)
+	{
+		testStieSync(argv[1], atoi(argv[2]), atoi(argv[3]), atoi(argv[4]), argv[5]);
+	}
+	else
+	{
+		std::cout << "Incorrect input arguments" << std::endl;
+		return 0;
+	}
 #ifdef _WIN64
 #ifdef _DEBUG
 	_CrtDumpMemoryLeaks();
 #endif
 #endif
-	return 0;
+	return 0;	
 }
 
-void testStieSync()
+void testStieSync(char* qpath, int inn, int ind, int inp, char* x0path)
 {
 	// choose a random seed
 	unsigned tt = (unsigned)time(NULL);
 	genrandseed(tt);
 
-	// size of the Stiefel manifold (read from input required)
-	integer n = 12, p = 8, d = 8, ND = n*d;	
+	// size of the Stiefel manifold (read from input)
+	integer n = inn, p = inp, d = ind, ND = n*d;
 
-	//load Q matrix from dataset required
-	double *Q = new double[ND * ND];
-	for (integer i = 0; i < ND; i++)
+	//load Q matrix from dataset
+	std::ifstream input(qpath,std::ios::in);
+	if(!input)
 	{
-		for (integer j = i; j < ND; j++)
+		std::cout << "ERROR: Q matrix data not defined" << std::endl;
+		return;
+	}
+	
+	double *Q = new double[ND*ND]; 
+	integer row,col;
+	double value;
+	std::string line;
+	for (row = 0; row < ND; row++)
+	{
+		for (col = row; col < ND; col++)
 		{
-			Q[i + j * ND] = genrandnormal();
-			Q[j + i * ND] = Q[i + j * ND];
+			Q[row + col * ND] = 0;
+			Q[col + row * ND] = Q[row + col * ND];
 		}
 	}
+
+	while(std::getline(input,line))
+	{
+		std::stringstream entry(line);	
+		entry >> row >> col >> value;
+		Q[(row-1) + (col-1)*ND] = value;
+	}
+	input.close();
+
+	/* The code to store Q in an Eigen::SparseMatrix object, but not applicable in ROPTLIB yet.
+	typedef Eigen::Triplet<double> T;
+	std::vector<T> elements;
+	integer row, col;
+	double value;
+	std::string line;
+
+	while(std::getline(input,line))
+	{
+		std::stringstream entry(line);	
+		entry >> row >> col >> value;
+		elements.push_back(T(row-1,col-1,value));
+	}
+
+	Eigen::SparseMatrix<double> Q(ND, ND);
+	Q.setFromTriplets(elements.begin(), elements.end());*/
+
 	
 	//initialize a point on the manifold
 	integer numofmanis = 1;
 	integer numofmani1 = n;
 	StieVariable StieX(p,d);
-	ProductElement ProdX(numofmanis , &StieX, numofmani1);
-	//if() path is provided
-	//else
-	ProdX.RandInManifold();
+	ProductElement ProdX(numofmanis, &StieX, numofmani1);
+	if(x0path == NULL)
+	{
+		ProdX.RandInManifold();
+	}
+	else
+	{
+		std::ifstream input(qpath,std::ios::in);
+		if(!input)
+		{
+			std::cout << "ERROR: X matrix could not be initialized" << std::endl;
+			return;
+		}
+
+		double *x0 = ProdX.ObtainWriteEntireData();
+		while(std::getline(input,line))
+		{
+			std::stringstream entry(line);	
+			entry >> row >> col >> value;
+			x0[(row-1) + (col-1)*p] = value;
+		}
+	}
 
 	//Define the manifold domain
 	Stiefel Mani(p,d);
@@ -103,11 +168,24 @@ void testStieSync()
 	Prob.CheckGradHessian(&ProdX);
 	const Variable *xopt = RTRNewtonsolver.GetXopt();
 	Prob.CheckGradHessian(xopt);
+	
+	//Store xopt into a file
+	const double *optimizer = xopt->ObtainReadData();
+	std::ofstream outfile;
+	outfile.open("/home/gaurav/xopt.txt");
+	if(!outfile) {
+    		std::cout << "Cannot open file to save xopt";
+	}
+	for(row = 0; row < p; ++row){
+		for(col = 0; col < ND; ++col){
+			outfile << row << " " << col << " " << optimizer[row + col * p];	
+			outfile << std::endl;
+	}
+	}
+	outfile.close();
 
 	delete[] Q;
 
 	return;	
 }
-
-#endif // end of TESTSTIESYNC
 #endif // end of TESTSTIESYNC_CPP
