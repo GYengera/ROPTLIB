@@ -6,13 +6,17 @@ The computation of the function, gradient and hessian can be found in /Problems/
 
 The above mentioned code is self-explanatory as all necessary comments are included.
 
-To compile this example use the command: 
+To compile this example use the command:
+
 $ make ROPTLIB TP=TestStieSync
 
 After compilation, the command to run the example is the following:
+
 $ ./TestStieSync < Q Dataset Path> < n > < d > < p > < Initial value X0 path >
 
-If the path is not provided to the data for initializing the value of X, then a random point is created on the stacked stiefel manifold.
+Datasets for matrix Q can be found at: http://mapir.isa.uma.es/jbriales/GSOC_project8_data.zip 
+
+If the path is not provided to the data for initializing the value of X, then a random point is created on the stacked Stiefel manifold.
 
 The optimum value of X is stored in a text file. The path to the file can be altered within the code.
 Gradient and hessian checks are displayed in the terminal for verification.
