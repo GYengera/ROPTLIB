@@ -1,18 +1,20 @@
-# ROPTLIB with SE-Sync Optimization Example
+# SE-Sync Optimization Example with ROPTLIB
+
+SE-Sync is a certifiably correct algorithm for synchronization over the special Euclidean group, a common problem arising in the context of 2D and 3D geometric estimation such as pose-graph SLAM for example. A detailed explanation of the algorithm can be found in this [paper](https://arxiv.org/pdf/1611.00128.pdf).
+
+This code implements the riemannian optimization problem given in problem 4 (equation 13) of the [paper](https://arxiv.org/pdf/1611.00128.pdf). 
 
 The main function for the SE-Sync optimization problem is in /test/TestStieSync.cpp
 
-The computation of the function, gradient and hessian can be found in /Problems/StieSync/ folder.
+The computation of the function, gradient and hessian (shown in equation 14 of the [paper](https://arxiv.org/pdf/1611.00128.pdf)) can be found in /Problems/StieSync/ folder.
 
-The above mentioned code is self-explanatory as all necessary comments are included.
-
-To compile this example use the command:
+To compile this example run the following command:
 
 $ make ROPTLIB TP=TestStieSync
 
 After compilation, the command to run the example is the following:
 
-$ ./TestStieSync < Q Dataset Path> < n > < d > < p > < Initial value X0 path >
+$ < path >/TestStieSync < Q Dataset Path> < n > < d > < p > < Initial value X0 path >
 
 Datasets for matrix Q can be found at: http://mapir.isa.uma.es/jbriales/GSOC_project8_data.zip 
 
