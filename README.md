@@ -14,7 +14,7 @@ $ make ROPTLIB TP=TestStieSync
 
 After compilation, the command to run the example is the following:
 
-$ < path >/TestStieSync < Q Dataset Path> < n > < d > < p > < Initial value X0 path >
+$ <path_to_file>/TestStieSync Q_Dataset_Path n d p Initial_value_X0_path
 
 Datasets for matrix Q can be found at: http://mapir.isa.uma.es/jbriales/GSOC_project8_data.zip 
 
